@@ -1,0 +1,17 @@
+---
+
+__mysql__: {
+  databases: [
+    wordpress
+  ],
+  users: [
+    {
+      name: wordpress,
+      password: wordpress,
+      hosts: 'localhost',
+      privs: [
+        'wordpress.*:ALL',
+      ]
+    },
+  ]
+}

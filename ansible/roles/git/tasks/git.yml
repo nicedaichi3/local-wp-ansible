@@ -1,0 +1,8 @@
+---
+
+- name: installs git.
+  yum: name=git
+
+- name: copies "gitignore".
+  copy: src=gitignore dest="/home/{{ansible_ssh_user}}/.gitignore" mode=0644
+  sudo: no

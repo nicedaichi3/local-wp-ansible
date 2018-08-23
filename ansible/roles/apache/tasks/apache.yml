@@ -1,0 +1,18 @@
+---
+
+- name: installs packages.
+  yum: name={{item}}
+  with_items: [httpd, mod_ssl]
+
+- name: copy files to httpd/conf.
+  copy: src={{item}} dest=/etc/httpd/conf/{{item|basename}}
+  with_fileglob: [conf/*]
+  register: copy_result1
+
+- name: copy files to httpd/conf.d.
+  copy: src={{item}} dest=/etc/httpd/conf.d/{{item|basename}}
+  with_fileglob: [conf.d/*]
+  register: copy_result2
+
+- name: starts service.
+  service: name=httpd state=started enabled=yes

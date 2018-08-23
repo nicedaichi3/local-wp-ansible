@@ -1,0 +1,5 @@
+---
+
+- name: installs openssl.
+  yum: name={{item}}
+  with_items: [mod_ssl, openssl]

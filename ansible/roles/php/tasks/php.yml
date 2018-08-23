@@ -1,0 +1,21 @@
+---
+- include_vars: ../vars/php.yml
+
+- name: installs epel repository.
+  yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+- name: installs remi repository.
+  yum: name=http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+- name: installs libmcrypt.
+  yum: name=yum-utils
+
+- name: eneble php72
+  command: yum-config-manager --enable remi-php72
+
+- name: installs php.
+  yum: name=php enablerepo=epel,remi,remi-php72
+
+- name: installs php packages.
+  yum: name={{ item }} enablerepo=remi,remi-php56 state=present
+  with_items: "{{ php.pkgs }}"

@@ -1,0 +1,32 @@
+---
+
+- include_vars: ../vars/mysql.yml
+
+- name: installs mysql.
+  yum:
+    name: mysql
+
+- name: installs mysql packages.
+  yum: name={{ item }}
+  with_items: "{{ mysql.pkgs }}"
+
+- name: starts mariadb.
+  service: name=mariadb state=started enabled=yes
+
+- name: installs MySQL-python.
+  yum: name=MySQL-python
+
+- name: create databases.
+  mysql_db:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ __mysql__.databases }}"
+
+- name: create mysql users.
+  mysql_user:
+    name: "{{ item.name }}"
+    host: "{{ item.hosts }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.privs | join('/') }}"
+    state: present
+  with_items: "{{ __mysql__.users }}"

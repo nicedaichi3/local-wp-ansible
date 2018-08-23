@@ -1,0 +1,24 @@
+[epel]
+name = Extra Packages for Enterprise Linux 6 - $basearch
+failovermethod = priority
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+enabled = 0
+mirrorlist = http://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
+gpgcheck = 1
+
+[epel-debuginfo]
+name = Extra Packages for Enterprise Linux 6 - $basearch - Debug
+failovermethod = priority
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+enabled = 0
+mirrorlist = https://mirrors.fedoraproject.org/metalink?repo=epel-debug-6&arch=$basearch
+gpgcheck = 1
+
+[epel-source]
+name = Extra Packages for Enterprise Linux 6 - $basearch - Source
+failovermethod = priority
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+enabled = 0
+mirrorlist = https://mirrors.fedoraproject.org/metalink?repo=epel-source-6&arch=$basearch
+gpgcheck = 1
+

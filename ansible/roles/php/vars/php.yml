@@ -1,0 +1,3 @@
+---
+
+php: { pkgs: [ php-mysql, php-mbstring ] }

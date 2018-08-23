@@ -1,0 +1,16 @@
+---
+
+- hosts: local-wp-ansible
+  become: yes
+  user: vagrant
+  gather_facts: no
+  roles:
+    - {role: common,  tags: [always]}
+    - {role: git,     tags: [always]}
+    - {role: apache,  tags: [apache]}
+    - {role: openssl,  tags: [openssl]}
+    - {role: self-signed-certificate,  tags: [self-signed-certificate]}
+    - {role: php,     tags: [php]}
+    - {role: mysql,  tags: [mysql]}
+    # - {role: mail, tags: [mail]}
+    - {role: application,     tags: [application]}

@@ -1,0 +1,48 @@
+---
+
+# - name: generate private key.
+#   shell: openssl genrsa -out ca.key 2048
+#   register: generate_result1
+
+#- name: generate CSR.
+#  shell: openssl req -new -key ca.key -out ca.csr
+#  register: generate_result2
+
+# - name: generate self signed key.
+#   shell: openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+#   register: generate_result3
+
+- name: copy ca.crt to /etc/pki/tls/certs.
+  copy: src=ca.crt dest=/etc/pki/tls/certs/
+  register: copy_result1
+  notify: restart httpd
+
+- name: copy ca.key to /etc/pki/tls/private.
+  copy: src=ca.key dest=/etc/pki/tls/private/
+  register: copy_result2
+  notify: restart httpd
+
+- name: copy ca.csr to /etc/pki/tls/private.
+  copy: src=ca.csr dest=/etc/pki/tls/private/
+  register: copy_result3
+  notify: restart httpd
+
+- name: copy files to httpd.conf.
+  copy: src=httpd.conf dest=/etc/httpd/conf/
+  register: copy_result4
+  notify: restart httpd
+
+- name: copy files to httpd-vhosts.conf.
+  copy: src=httpd-vhosts.conf dest=/etc/httpd/conf.d/
+  register: copy_result5
+  notify: restart httpd
+
+- name: check ssl.conf exists.
+  stat:
+    path: /etc/httpd/conf.d/ssl.conf
+  register: ssl_conf_exists
+
+- name: rename ssl.conf.
+  shell: mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.bk
+  when: ssl_conf_exists.stat.exists == True
+  notify: restart httpd

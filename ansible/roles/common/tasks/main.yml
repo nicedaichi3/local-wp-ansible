@@ -1,0 +1,5 @@
+---
+
+- include_tasks: yum.yml
+- include_tasks: selinux.yml
+- include_tasks: vim.yml
